@@ -1,16 +1,12 @@
-# skype_clone
+# Skype Clone in <img src='http://sovitpoudel.com.np/wp-content/uploads/2019/01/flutter.png' height='30' width='30' align='top'>
 
-A new Flutter project.
+Making a Skype Clone in Flutter - **In Progress**
+<br>
+Checkout the course here : [THE CS GUY](https://youtu.be/01PUYvVoLa8)
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Project Structure
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project is going to be divided in several different branches. As I release a new video, the content related to that video will be committed to the branch with the same name as that of the video.

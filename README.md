@@ -5,8 +5,8 @@ Making a Skype Clone in Flutter - **In Progress**
 Checkout the course here : [THE CS GUY](https://youtu.be/01PUYvVoLa8)
 
 ## Screenshots
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_01.png' width='28%'>
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_02.png' width='28%'>
+<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_01.png' width='20%'>
+<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_02.png' width='20%'>
 <img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_03.png' width='30%'>
 <img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_04.png' width='30%'>
 <img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_05.png' width='30%'>

@@ -6,4 +6,5 @@ Checkout the course here : [THE CS GUY](https://youtu.be/01PUYvVoLa8)
 
 ## Branch Details
 This branch contains the code for implementing google sign in using firebase auth for the skype clone project.
-Video Tutorial Will Be Linked Soon.
+
+Checkout the video tutorial [here](https://youtu.be/mwnUGvmSMrI)

@@ -23,4 +23,6 @@ Checkout the course here : [THE CS GUY](https://youtu.be/01PUYvVoLa8)
 
 This project is going to be divided in several different branches. As I release a new video, the content related to that video will be committed to the branch with the same name as that of the video.
 
-1. Firebase Integration Branch - [Video](https://youtu.be/P1riVXbCSAM)
+1. Firebase Integration Branch - [Video](https://youtu.be/P1riVXbCSAM) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Firebase_Integration)
+
+2. Google Sign In - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-3-Google_Sign_In)

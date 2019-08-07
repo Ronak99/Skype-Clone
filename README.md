@@ -25,4 +25,4 @@ This project is going to be divided in several different branches. As I release 
 
 1. Firebase Integration Branch - [Video](https://youtu.be/P1riVXbCSAM) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Firebase_Integration)
 
-2. Google Sign In - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-3-Google_Sign_In)
+2. Google Sign In - [Video](https://youtu.be/mwnUGvmSMrI) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-3-Google_Sign_In)

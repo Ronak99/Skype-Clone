@@ -15,7 +15,7 @@ final FirebaseRepository _repository = FirebaseRepository();
 
 class _ChatListScreenState extends State<ChatListScreen> {
   String currentUserId;
-  String initials;
+  String initials = "";
 
   @override
   void initState() {
@@ -46,7 +46,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
             Icons.search,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, "/search_screen");
+          },
         ),
         IconButton(
           icon: Icon(
@@ -109,7 +111,8 @@ class _ChatListContainerState extends State<ChatListContainer> {
                   CircleAvatar(
                     maxRadius: 30,
                     backgroundColor: Colors.grey,
-                    backgroundImage: NetworkImage("https://yt3.ggpht.com/a/AGF-l7_zT8BuWwHTymaQaBptCy7WrsOD72gYGp-puw=s900-c-k-c0xffffffff-no-rj-mo"),
+                    backgroundImage: NetworkImage(
+                        "https://yt3.ggpht.com/a/AGF-l7_zT8BuWwHTymaQaBptCy7WrsOD72gYGp-puw=s900-c-k-c0xffffffff-no-rj-mo"),
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
@@ -117,13 +120,10 @@ class _ChatListContainerState extends State<ChatListContainer> {
                       height: 13,
                       width: 13,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: UniversalVariables.onlineDotColor,
-                        border: Border.all(
-                          color: UniversalVariables.blackColor,
-                          width: 2
-                        )
-                      ),
+                          shape: BoxShape.circle,
+                          color: UniversalVariables.onlineDotColor,
+                          border: Border.all(
+                              color: UniversalVariables.blackColor, width: 2)),
                     ),
                   )
                 ],

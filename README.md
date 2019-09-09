@@ -3,6 +3,7 @@
 Part -6 - Implementing Search Functionality and Making the Search Screen
 
 Checkout the course here : [THE CS GUY](https://youtu.be/01PUYvVoLa8)
+
 Checkout the video for this branch [HERE](https://smething.com)
 
 ## Project Structure

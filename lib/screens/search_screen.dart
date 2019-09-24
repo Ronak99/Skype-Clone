@@ -142,34 +142,3 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-//  return ListView.builder(
-//       itemCount: suggestionList.length,
-//       itemBuilder: ((context, index) {
-//         User searchedUser = User(
-//             uid: suggestionList[index].uid,
-//             profilePhoto: suggestionList[index].profilePhoto,
-//             name: suggestionList[index].name,
-//             username: suggestionList[index].username);
-
-//         return CustomTile(
-//           mini: false,
-//           onTap: () {;
-//           },
-//           leading: CircleAvatar(
-//             backgroundImage: NetworkImage(searchedUser.profilePhoto),
-//             backgroundColor: Colors.grey,
-//           ),
-//           title: Text(
-//             searchedUser.username,
-//             style: TextStyle(
-//               color: Colors.white,
-//               fontWeight: FontWeight.bold,
-//             ),
-//           ),
-//           subtitle: Text(
-//             searchedUser.name,
-//             style: TextStyle(color: UniversalVariables.greyColor),
-//           ),
-//         );
-//       }),
-//     );

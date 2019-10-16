@@ -4,7 +4,7 @@ Part -7 - Making the Chat Screen UI
 
 Checkout the course here : [THE CS GUY](https://youtu.be/01PUYvVoLa8)
 
-Checkout the video for this branch [HERE](https://smething.com)
+Checkout the video for this branch [HERE](https://www.youtube.com/watch?v=h5wq7OK-cSI)
 
 ## Project Structure
 

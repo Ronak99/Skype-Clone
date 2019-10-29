@@ -25,6 +25,9 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: customAppBar(context),
       body: Column(
         children: <Widget>[
+          Flexible(
+            child: messageList(),
+          ),
           chatControls(),
         ],
       ),

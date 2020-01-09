@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:skype_clone/models/message.dart';
 import 'package:skype_clone/models/user.dart';
+import 'package:skype_clone/resources/firebase_repository.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'package:skype_clone/widgets/appbar.dart';
 import 'package:skype_clone/widgets/custom_tile.dart';
@@ -15,6 +18,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textFieldController = TextEditingController();
+  FirebaseRepository _repository = FirebaseRepository();
 
   bool isWriting = false;
 
@@ -159,25 +163,25 @@ class _ChatScreenState extends State<ChatScreen> {
                         icon: Icons.image,
                       ),
                       ModalTile(
-                        title: "File",
-                        subtitle: "Share files",
-                        icon: Icons.tab),
-                    ModalTile(
-                        title: "Contact",
-                        subtitle: "Share contacts",
-                        icon: Icons.contacts),
-                    ModalTile(
-                        title: "Location",
-                        subtitle: "Share a location",
-                        icon: Icons.add_location),
-                    ModalTile(
-                        title: "Schedule Call",
-                        subtitle: "Arrange a skype call and get reminders",
-                        icon: Icons.schedule),
-                    ModalTile(
-                        title: "Create Poll",
-                        subtitle: "Share polls",
-                        icon: Icons.poll)
+                          title: "File",
+                          subtitle: "Share files",
+                          icon: Icons.tab),
+                      ModalTile(
+                          title: "Contact",
+                          subtitle: "Share contacts",
+                          icon: Icons.contacts),
+                      ModalTile(
+                          title: "Location",
+                          subtitle: "Share a location",
+                          icon: Icons.add_location),
+                      ModalTile(
+                          title: "Schedule Call",
+                          subtitle: "Arrange a skype call and get reminders",
+                          icon: Icons.schedule),
+                      ModalTile(
+                          title: "Create Poll",
+                          subtitle: "Share polls",
+                          icon: Icons.poll)
                     ],
                   ),
                 ),
@@ -254,7 +258,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       Icons.send,
                       size: 15,
                     ),
-                    onPressed: () => {},
+                    onPressed: () => sendMessage(),
                   ))
               : Container()
         ],
@@ -262,9 +266,23 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  sendMessage() {
+    var text = textFieldController.text;
 
+    Message _message = Message(
+        receiverId: widget.receiver.uid,
+        senderId: sender.uid,
+        message: text,
+        timestamp: FieldValue.serverTimestamp(),
+        type: 'text');
+    textFieldController.text = "";
+    setState(() {
+      isWriting = false;
+    });
 
-          
+    _repository.addMessageToDb(_message, sender, widget.receiver);
+  }
+
   CustomAppBar customAppBar(context) {
     return CustomAppBar(
       leading: IconButton(

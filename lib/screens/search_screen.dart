@@ -34,8 +34,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
   searchAppBar(BuildContext context) {
     return GradientAppBar(
-      backgroundColorStart: UniversalVariables.gradientColorStart,
-      backgroundColorEnd: UniversalVariables.gradientColorEnd,
+      gradient: LinearGradient(
+        colors: [
+          UniversalVariables.gradientColorStart,
+          UniversalVariables.gradientColorEnd,
+        ],
+      ),
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => Navigator.pop(context),

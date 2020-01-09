@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:skype_clone/models/message.dart';
 import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/resources/firebase_repository.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
@@ -258,29 +256,12 @@ class _ChatScreenState extends State<ChatScreen> {
                       Icons.send,
                       size: 15,
                     ),
-                    onPressed: () => sendMessage(),
+                    onPressed: () => {},
                   ))
               : Container()
         ],
       ),
     );
-  }
-
-  sendMessage() {
-    var text = textFieldController.text;
-
-    Message _message = Message(
-        receiverId: widget.receiver.uid,
-        senderId: sender.uid,
-        message: text,
-        timestamp: FieldValue.serverTimestamp(),
-        type: 'text');
-    textFieldController.text = "";
-    setState(() {
-      isWriting = false;
-    });
-
-    _repository.addMessageToDb(_message, sender, widget.receiver);
   }
 
   CustomAppBar customAppBar(context) {

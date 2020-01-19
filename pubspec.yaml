@@ -28,7 +28,7 @@ dependencies:
   cloud_firestore: ^0.12.9
 
   # For handling permissions
-  permission_handler: ^3.2.1+1
+  # permission_handler: ^4.1.0
 
   # For handling authentication via firebase
   firebase_auth: '0.11.1+7'

@@ -17,7 +17,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _repository.signOut();
+  
     return Scaffold(
       backgroundColor: UniversalVariables.blackColor,
       body: Stack(

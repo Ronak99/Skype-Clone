@@ -60,7 +60,6 @@ class LoginScreenState extends State<LoginScreen> {
     });
 
     _repository.signIn().then((FirebaseUser user) {
-      print("something");
       if (user != null) {
         authenticateUser(user);
       } else {

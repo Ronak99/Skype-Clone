@@ -27,12 +27,12 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isWriting = false;
 
   @override
-  void initState() {  
+  void initState() {
     super.initState();
 
     _repository.getCurrentUser().then((user) {
       _currentUserId = user.uid;
-
+      
       setState(() {
         sender = User(
           uid: user.uid,

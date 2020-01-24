@@ -32,7 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _repository.getCurrentUser().then((user) {
       _currentUserId = user.uid;
-      
+
       setState(() {
         sender = User(
           uid: user.uid,
@@ -83,20 +83,25 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget chatMessageItem(DocumentSnapshot snapshot) {
+    Message message = Message.fromMap(snapshot.data);
+    Message _msg = Message();
+
+    print(_msg.senderId);
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       child: Container(
-        alignment: snapshot['senderId'] == _currentUserId
+        alignment: message.senderId == _currentUserId
             ? Alignment.centerRight
             : Alignment.centerLeft,
-        child: snapshot['senderId'] == _currentUserId
-            ? senderLayout(snapshot)
-            : receiverLayout(snapshot),
+        child: message.senderId == _currentUserId
+            ? senderLayout(message)
+            : receiverLayout(message),
       ),
     );
   }
 
-  Widget senderLayout(DocumentSnapshot snapshot) {
+  Widget senderLayout(Message snapshot) {
     Radius messageRadius = Radius.circular(10);
 
     return Container(
@@ -118,9 +123,9 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  getMessage(DocumentSnapshot snapshot) {
+  getMessage(Message message) {
     return Text(
-      snapshot['message'],
+      message.message,
       style: TextStyle(
         color: Colors.white,
         fontSize: 16.0,
@@ -128,7 +133,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget receiverLayout(DocumentSnapshot snapshot) {
+  Widget receiverLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
 
     return Container(
@@ -145,7 +150,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       child: Padding(
         padding: EdgeInsets.all(10),
-        child: getMessage(snapshot),
+        child: getMessage(message),
       ),
     );
   }
@@ -233,7 +238,7 @@ class _ChatScreenState extends State<ChatScreen> {
         receiverId: widget.receiver.uid,
         senderId: sender.uid,
         message: text,
-        timestamp: FieldValue.serverTimestamp(),
+        timestamp: Timestamp.now(),
         type: 'text',
       );
 

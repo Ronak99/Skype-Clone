@@ -75,6 +75,7 @@ class _ChatScreenState extends State<ChatScreen> {
           padding: EdgeInsets.all(10),
           itemCount: snapshot.data.documents.length,
           itemBuilder: (context, index) {
+            // mention the arrow syntax if you get the time
             return chatMessageItem(snapshot.data.documents[index]);
           },
         );
@@ -83,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget chatMessageItem(DocumentSnapshot snapshot) {
+    
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       child: Container(
@@ -236,7 +238,7 @@ class _ChatScreenState extends State<ChatScreen> {
         timestamp: FieldValue.serverTimestamp(),
         type: 'text',
       );
-
+      textFieldController.text = "";
       setState(() {
         isWriting = false;
       });

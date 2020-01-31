@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:skype_clone/constants/strings.dart';
 import 'package:skype_clone/models/message.dart';
 import 'package:skype_clone/models/user.dart';
@@ -7,6 +8,8 @@ import 'package:skype_clone/resources/firebase_repository.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'package:skype_clone/widgets/appbar.dart';
 import 'package:skype_clone/widgets/custom_tile.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:emoji_picker/emoji_picker.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -19,6 +22,8 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textFieldController = TextEditingController();
+  FocusNode textFieldFocus = FocusNode();
+
   FirebaseRepository _repository = FirebaseRepository();
 
   User sender;
@@ -27,9 +32,22 @@ class _ChatScreenState extends State<ChatScreen> {
 
   bool isWriting = false;
 
+  bool showEmojiPicker = false;
+  bool keyboardVisible = false;
+
+  ScrollController _listScrollController = ScrollController();
+
+  KeyboardVisibilityNotification _keyboardVisibilityNotification;
+
   @override
   void initState() {
     super.initState();
+
+    _keyboardVisibilityNotification = KeyboardVisibilityNotification();
+
+    _keyboardVisibilityNotification.addNewListener(onShow: () {
+      hideEmojiContainer();
+    });
 
     _repository.getCurrentUser().then((user) {
       _currentUserId = user.uid;
@@ -45,6 +63,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   @override
+  void dispose() {
+    _keyboardVisibilityNotification.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UniversalVariables.blackColor,
@@ -55,8 +79,30 @@ class _ChatScreenState extends State<ChatScreen> {
             child: messageList(),
           ),
           chatControls(),
+          showEmojiPicker ? Container(child: emojiKeyboard()) : Container()
         ],
       ),
+    );
+  }
+
+  emojiKeyboard() {
+    return EmojiPicker(
+      bgColor: UniversalVariables.separatorColor,
+      indicatorColor: UniversalVariables.blueColor,
+      rows: 3,
+      columns: 10,
+      buttonMode: ButtonMode.CUPERTINO,
+      noRecentsStyle: TextStyle(
+        color: Colors.white,
+      ),
+      recommendKeywords: ["racing", "horse", "face", "happy", "sad"],
+      numRecommended: 50,
+      onEmojiSelected: (emoji, category) {
+        setState(() {
+          isWriting = true;
+        });
+        textFieldController.text = textFieldController.text + emoji.emoji;
+      },
     );
   }
 
@@ -72,8 +118,19 @@ class _ChatScreenState extends State<ChatScreen> {
         if (snapshot.data == null) {
           return Center(child: CircularProgressIndicator());
         }
+
+        // SchedulerBinding.instance.addPostFrameCallback((_) {
+        //   _listScrollController.animateTo(
+        //     _listScrollController.position.minScrollExtent,
+        //     duration: const Duration(milliseconds: 250),
+        //     curve: Curves.easeOut,
+        //   );
+        // });
+
         return ListView.builder(
           padding: EdgeInsets.all(10),
+          controller: _listScrollController,
+          reverse: true,
           itemCount: snapshot.data.documents.length,
           itemBuilder: (context, index) {
             // mention the arrow syntax if you get the time
@@ -130,6 +187,26 @@ class _ChatScreenState extends State<ChatScreen> {
         fontSize: 16.0,
       ),
     );
+  }
+
+  showKeyboard() => textFieldFocus.requestFocus();
+
+  hideKeyboard() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      textFieldFocus.unfocus();
+    });
+  }
+
+  hideEmojiContainer() {
+    setState(() {
+      showEmojiPicker = false;
+    });
+  }
+
+  showEmojiContainer() {
+    setState(() {
+      showEmojiPicker = true;
+    });
   }
 
   Widget receiverLayout(Message message) {
@@ -269,35 +346,56 @@ class _ChatScreenState extends State<ChatScreen> {
             width: 5,
           ),
           Expanded(
-            child: TextField(
-              controller: textFieldController,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-              onChanged: (val) {
-                (val.length > 0 && val.trim() != "")
-                    ? setWritingTo(true)
-                    : setWritingTo(false);
-              },
-              decoration: InputDecoration(
-                hintText: "Type a message",
-                hintStyle: TextStyle(
-                  color: UniversalVariables.greyColor,
-                ),
-                border: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(50.0),
+            child: Stack(
+              alignment: Alignment.centerRight,
+              children: <Widget>[
+                TextField(
+                  controller: textFieldController,
+                  focusNode: textFieldFocus,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  onChanged: (val) {
+                    (textFieldController.text.length > 0 &&
+                            textFieldController.text.trim() != "")
+                        ? setWritingTo(true)
+                        : setWritingTo(false);
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Type a message",
+                    hintStyle: TextStyle(
+                      color: UniversalVariables.greyColor,
                     ),
-                    borderSide: BorderSide.none),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                filled: true,
-                fillColor: UniversalVariables.separatorColor,
-                suffixIcon: GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.face),
+                    border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(50.0),
+                        ),
+                        borderSide: BorderSide.none),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    filled: true,
+                    fillColor: UniversalVariables.separatorColor,
+                  ),
                 ),
-              ),
+                IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  icon: Icon(Icons.face),
+                  onPressed: () {
+                    print("something");
+                    // where back button will take you back to previous screen
+                    if (!showEmojiPicker) {
+                      // keyboard is visible
+                      hideKeyboard();
+                      showEmojiContainer();
+                    } else {
+                      //keyboard is hidden
+                      showKeyboard();
+                      hideEmojiContainer();
+                    }
+                  },
+                ),
+              ],
             ),
           ),
           isWriting

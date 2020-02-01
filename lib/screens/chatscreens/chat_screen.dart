@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:skype_clone/constants/strings.dart';
 import 'package:skype_clone/models/message.dart';
 import 'package:skype_clone/models/user.dart';
@@ -21,11 +22,16 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textFieldController = TextEditingController();
   FirebaseRepository _repository = FirebaseRepository();
 
+  ScrollController _listScrollController = ScrollController();
+
   User sender;
 
   String _currentUserId;
 
   bool isWriting = false;
+
+  bool showEmojiPicker = false;
+  
 
   @override
   void initState() {
@@ -72,9 +78,20 @@ class _ChatScreenState extends State<ChatScreen> {
         if (snapshot.data == null) {
           return Center(child: CircularProgressIndicator());
         }
+
+        // SchedulerBinding.instance.addPostFrameCallback((_) {
+        //   _listScrollController.animateTo(
+        //     _listScrollController.position.minScrollExtent,
+        //     duration: Duration(milliseconds: 250),
+        //     curve: Curves.easeInOut,
+        //   );
+        // });
+
         return ListView.builder(
           padding: EdgeInsets.all(10),
           itemCount: snapshot.data.documents.length,
+          reverse: true,
+          controller: _listScrollController,
           itemBuilder: (context, index) {
             // mention the arrow syntax if you get the time
             return chatMessageItem(snapshot.data.documents[index]);

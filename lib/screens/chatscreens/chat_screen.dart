@@ -45,10 +45,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _keyboardVisibilityNotification = KeyboardVisibilityNotification();
 
-    _keyboardVisibilityNotification.addNewListener(onShow: () {
-      hideEmojiContainer();
-    });
-
     _repository.getCurrentUser().then((user) {
       _currentUserId = user.uid;
 
@@ -191,11 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   showKeyboard() => textFieldFocus.requestFocus();
 
-  hideKeyboard() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      textFieldFocus.unfocus();
-    });
-  }
+  hideKeyboard() => textFieldFocus.unfocus();
 
   hideEmojiContainer() {
     setState(() {
@@ -352,6 +344,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 TextField(
                   controller: textFieldController,
                   focusNode: textFieldFocus,
+                  onTap: () => hideEmojiContainer(),
                   style: TextStyle(
                     color: Colors.white,
                   ),

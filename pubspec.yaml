@@ -42,11 +42,8 @@ dependencies:
   # Gradient app bar
   gradient_app_bar: ^0.1.3
 
-  # for emoji
+  # Emojies
   emoji_picker: ^0.1.0
-
-  # For keyboard visibility
-  keyboard_visibility: ^0.5.6
 
 dev_dependencies:
   flutter_test:

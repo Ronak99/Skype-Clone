@@ -45,6 +45,22 @@ dependencies:
   # Emojies
   emoji_picker: ^0.1.0
 
+  # image_picker
+  image_picker: ^0.6.3+1
+
+  # path provider
+  path_provider: ^1.6.0
+
+  # firebase storage
+  firebase_storage: ^3.1.1
+
+  # provider
+  provider: ^4.0.3
+
+  # cached network image
+  cached_network_image: ^2.0.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

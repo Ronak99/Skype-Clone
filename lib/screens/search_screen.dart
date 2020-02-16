@@ -88,18 +88,20 @@ class _SearchScreenState extends State<SearchScreen> {
   buildSuggestions(String query) {
     final List<User> suggestionList = query.isEmpty
         ? []
-        : userList.where((User user) {
-            String _getUsername = user.username.toLowerCase();
-            String _query = query.toLowerCase();
-            String _getName = user.name.toLowerCase();
-            bool matchesUsername = _getUsername.contains(_query);
-            bool matchesName = _getName.contains(_query);
+        : userList != null
+            ? userList.where((User user) {
+                String _getUsername = user.username.toLowerCase();
+                String _query = query.toLowerCase();
+                String _getName = user.name.toLowerCase();
+                bool matchesUsername = _getUsername.contains(_query);
+                bool matchesName = _getName.contains(_query);
 
-            return (matchesUsername || matchesName);
+                return (matchesUsername || matchesName);
 
-            // (User user) => (user.username.toLowerCase().contains(query.toLowerCase()) ||
-            //     (user.name.toLowerCase().contains(query.toLowerCase()))),
-          }).toList();
+                // (User user) => (user.username.toLowerCase().contains(query.toLowerCase()) ||
+                //     (user.name.toLowerCase().contains(query.toLowerCase()))),
+              }).toList()
+            : [];
 
     return ListView.builder(
       itemCount: suggestionList.length,

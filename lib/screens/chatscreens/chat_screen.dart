@@ -85,13 +85,21 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: customAppBar(context),
       body: Column(
         children: <Widget>[
+          RaisedButton(
+            child: Text("Change View State"),
+            onPressed: () {
+              _imageUploadProvider.getViewState == ViewState.LOADING
+                  ? _imageUploadProvider.setToIdle()
+                  : _imageUploadProvider.setToLoading();
+            },
+          ),
           Flexible(
             child: messageList(),
           ),
           _imageUploadProvider.getViewState == ViewState.LOADING
               ? Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 15),
+                  alignment: Alignment.center,
+                  // margin: EdgeInsets.only(right: 15),
                   child: CircularProgressIndicator(),
                 )
               : Container(),
@@ -194,6 +202,14 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   getMessage(Message message) {
+    return Text(
+      message.message,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+      ),
+    );
+
     return message.type != MESSAGE_TYPE_IMAGE
         ? Text(
             message.message,

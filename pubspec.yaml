@@ -60,6 +60,9 @@ dependencies:
   # cached network image
   cached_network_image: ^2.0.0
 
+  # agora rtc engine
+  agora_rtc_engine: ^1.0.8
+
 
 dev_dependencies:
   flutter_test:

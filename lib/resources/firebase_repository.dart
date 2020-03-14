@@ -13,6 +13,8 @@ class FirebaseRepository {
 
   Future<FirebaseUser> getCurrentUser() => _firebaseMethods.getCurrentUser();
 
+  Future<User> getUserDetails() => _firebaseMethods.getUserDetails();
+
   Future<FirebaseUser> signIn() => _firebaseMethods.signIn();
 
   Future<bool> authenticateUser(FirebaseUser user) =>
@@ -33,20 +35,14 @@ class FirebaseRepository {
   Future<String> uploadImageToStorage(File imageFile) =>
       _firebaseMethods.uploadImageToStorage(imageFile);
 
-  // void showLoading(String receiverId, String senderId) =>
-  //     _firebaseMethods.showLoading(receiverId, senderId);
-
-  // void hideLoading(String receiverId, String senderId) =>
-  //     _firebaseMethods.hideLoading(receiverId, senderId);
-
   void uploadImageMsgToDb(String url, String receiverId, String senderId) =>
       _firebaseMethods.setImageMsg(url, receiverId, senderId);
 
-  void uploadImage({
-    @required File image,
-    @required String receiverId,
-    @required String senderId,
-    @required ImageUploadProvider imageUploadProvider
-  }) =>
-      _firebaseMethods.uploadImage(image, receiverId, senderId, imageUploadProvider);
+  void uploadImage(
+          {@required File image,
+          @required String receiverId,
+          @required String senderId,
+          @required ImageUploadProvider imageUploadProvider}) =>
+      _firebaseMethods.uploadImage(
+          image, receiverId, senderId, imageUploadProvider);
 }

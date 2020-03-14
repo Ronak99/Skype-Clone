@@ -1,25 +1,45 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:skype_clone/constants/strings.dart';
 
 class CachedImage extends StatelessWidget {
-  final String url;
+  final String imageUrl;
+  final bool isRound;
+  final double radius;
+  final double height;
+  final double width;
 
-  CachedImage({
-    @required this.url,
+  final BoxFit fit;
+
+  CachedImage(
+    this.imageUrl, {
+    this.isRound = false,
+    this.radius = 0,
+    this.height,
+    this.width,
+    this.fit = BoxFit.cover,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-          child: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
-        child: CachedNetworkImage(
-          imageUrl: url,
-          placeholder: (context, url) =>
-              Center(child: CircularProgressIndicator()),
-        ),
-      ),
-    );
+    try {
+      return SizedBox(
+        height: isRound ? radius : height,
+        width: isRound ? radius : width,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(isRound ? 50 : radius),
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              fit: fit,
+              placeholder: (context, url) =>
+                  Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) =>
+                  Image.network(noImageAvailable, fit: BoxFit.cover),
+            )),
+      );
+    } catch (e) {
+      print(e);
+      return Image.network(noImageAvailable, fit: BoxFit.cover);
+    }
   }
 }

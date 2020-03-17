@@ -15,6 +15,9 @@ class FirebaseMethods {
   GoogleSignIn _googleSignIn = GoogleSignIn();
   static final Firestore firestore = Firestore.instance;
 
+  static final CollectionReference _userCollection =
+      _firestore.collection(USERS_COLLECTION);
+
   static final Firestore _firestore = Firestore.instance;
 
   StorageReference _storageReference;
@@ -26,6 +29,15 @@ class FirebaseMethods {
     FirebaseUser currentUser;
     currentUser = await _auth.currentUser();
     return currentUser;
+  }
+
+  Future<User> getUserDetails() async {
+    FirebaseUser currentUser = await getCurrentUser();
+
+    DocumentSnapshot documentSnapshot =
+        await _userCollection.document(currentUser.uid).get();
+
+    return User.fromMap(documentSnapshot.data);
   }
 
   Future<FirebaseUser> signIn() async {
@@ -156,7 +168,7 @@ class FirebaseMethods {
 
     // Get url from the image bucket
     String url = await uploadImageToStorage(image);
-  
+
     // Hide loading
     imageUploadProvider.setToIdle();
 

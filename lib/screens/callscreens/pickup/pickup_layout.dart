@@ -22,7 +22,7 @@ class PickupLayout extends StatelessWidget {
         ? StreamBuilder<DocumentSnapshot>(
             stream: callMethods.callStream(uid: userProvider.getUser.uid),
             builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data != null) {
+              if (snapshot.hasData && snapshot.data.data != null) {
                 Call call = Call.fromMap(snapshot.data.data);
 
                 return PickupScreen(call: call);

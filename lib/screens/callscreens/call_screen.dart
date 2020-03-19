@@ -61,17 +61,27 @@ class _CallScreenState extends State<CallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Text(
-            "Call has been made",
-          ),
-          MaterialButton(
-            color: Colors.red,
-            child: Icon(Icons.call_end),
-            onPressed: () async => await callMethods.endCall(call: widget.call),
-          ),
-        ],
+      body: Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              "Call has been made",
+            ),
+            MaterialButton(
+              color: Colors.red,
+              child: Icon(
+                Icons.call_end,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                callMethods.endCall(call: widget.call);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

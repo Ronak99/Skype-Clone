@@ -195,7 +195,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   getMessage(Message message) {
-    
     return message.type != MESSAGE_TYPE_IMAGE
         ? Text(
             message.message,
@@ -205,7 +204,12 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           )
         : message.photoUrl != null
-            ? CachedImage(url: message.photoUrl)
+            ? CachedImage(
+                message.photoUrl,
+                height: 250,
+                width: 250,
+                radius: 10,
+              )
             : Text("Url was null");
   }
 

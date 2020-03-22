@@ -19,7 +19,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="skype_clone"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/app_logo">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

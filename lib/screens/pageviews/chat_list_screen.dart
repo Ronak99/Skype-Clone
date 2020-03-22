@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skype_clone/resources/firebase_repository.dart';
+import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'package:skype_clone/utils/utilities.dart';
 import 'package:skype_clone/widgets/appbar.dart';
@@ -63,11 +64,13 @@ class _ChatListScreenState extends State<ChatListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: UniversalVariables.blackColor,
-      appBar: customAppBar(context),
-      floatingActionButton: NewChatButton(),
-      body: ChatListContainer(currentUserId),
+    return PickupLayout(
+      scaffold: Scaffold(
+        backgroundColor: UniversalVariables.blackColor,
+        appBar: customAppBar(context),
+        floatingActionButton: NewChatButton(),
+        body: ChatListContainer(currentUserId),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:skype_clone/models/call.dart';
 import 'package:skype_clone/resources/call_methods.dart';
 import 'package:skype_clone/screens/callscreens/call_screen.dart';
 import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
+import 'package:skype_clone/utils/permissions.dart';
 
 class PickupScreen extends StatelessWidget {
   final Call call;
@@ -56,12 +57,15 @@ class PickupScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.call),
                   color: Colors.green,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CallScreen(call: call),
-                    ),
-                  ),
+                  onPressed: () async =>
+                      await Permissions.cameraAndMicrophonePermissionsGranted()
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CallScreen(call: call),
+                              ),
+                            )
+                          : {},
                 ),
               ],
             ),

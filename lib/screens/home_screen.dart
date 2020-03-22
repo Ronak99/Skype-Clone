@@ -53,10 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ChatListScreen(),
             ),
             Center(
-                child: Text(
-              "Call Logs",
-              style: TextStyle(color: Colors.white),
-            )),
+              child: Text(
+                "Call Logs",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             Center(
                 child: Text(
               "Contact Screen",

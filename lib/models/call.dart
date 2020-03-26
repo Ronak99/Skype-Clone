@@ -6,9 +6,6 @@ class Call {
   String receiverName;
   String receiverPic;
   String channelId;
-
-  // hasDialled is a boolean value, which is gonna be true for the dialler and false for the receiver, we basically need this incase we wish to show a different UI or perform different actions for caller and receiver. You'll see what I mean when I use it.
-
   bool hasDialled;
 
   Call({

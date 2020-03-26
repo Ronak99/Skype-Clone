@@ -16,7 +16,9 @@ class FirebaseMethods {
   static final Firestore firestore = Firestore.instance;
 
   static final CollectionReference _userCollection =
-      firestore.collection(USERS_COLLECTION);
+      _firestore.collection(USERS_COLLECTION);
+
+  static final Firestore _firestore = Firestore.instance;
 
   StorageReference _storageReference;
 

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/provider/user_provider.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/screens/pageviews/chat_list_screen.dart';
@@ -20,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -54,10 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ChatListScreen(),
             ),
             Center(
-                child: Text(
-              "Call Logs",
-              style: TextStyle(color: Colors.white),
-            )),
+              child: Text(
+                "Call Logs",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             Center(
                 child: Text(
               "Contact Screen",

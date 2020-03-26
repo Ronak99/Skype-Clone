@@ -5,11 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:skype_clone/configs/agora_configs.dart';
 import 'package:skype_clone/models/call.dart';
 import 'package:skype_clone/provider/user_provider.dart';
 import 'package:skype_clone/resources/call_methods.dart';
-import 'package:skype_clone/screens/configs/agora_configs.dart';
-import 'package:skype_clone/utils/call_utilities.dart';
 
 class CallScreen extends StatefulWidget {
   final Call call;
@@ -24,54 +23,22 @@ class CallScreen extends StatefulWidget {
 
 class _CallScreenState extends State<CallScreen> {
   final CallMethods callMethods = CallMethods();
-  UserProvider userProvider;
 
+  UserProvider userProvider;
   StreamSubscription callStreamSubscription;
 
-  // file variables
   static final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
-  String onScreenText = "";
 
   @override
   void initState() {
     super.initState();
-    initialize();
     addPostFrameCallback();
+    initializeAgora();
   }
 
-  addPostFrameCallback() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      userProvider = Provider.of(context, listen: false);
-      callStreamSubscription = callMethods
-          .callStream(uid: userProvider.getUser.uid)
-          .listen((DocumentSnapshot ds) {
-        switch (ds.data) {
-          case null:
-            setOnScreenText("Call Ended");
-            Navigator.pop(context);
-            break;
-
-          default:
-            break;
-        }
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    callStreamSubscription.cancel();
-
-    _users.clear();
-    // destroy sdk
-    AgoraRtcEngine.leaveChannel();
-    AgoraRtcEngine.destroy();
-    super.dispose();
-  }
-
-  Future<void> initialize() async {
+  Future<void> initializeAgora() async {
     if (APP_ID.isEmpty) {
       setState(() {
         _infoStrings.add(
@@ -88,6 +55,28 @@ class _CallScreenState extends State<CallScreen> {
     await AgoraRtcEngine.setParameters(
         '''{\"che.video.lowBitRateStreamParameter\":{\"width\":320,\"height\":180,\"frameRate\":15,\"bitRate\":140}}''');
     await AgoraRtcEngine.joinChannel(null, widget.call.channelId, null, 0);
+    
+  }
+
+  addPostFrameCallback() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      callStreamSubscription = callMethods
+          .callStream(uid: userProvider.getUser.uid)
+          .listen((DocumentSnapshot ds) {
+        // defining the logic
+        switch (ds.data) {
+          case null:
+            // snapshot is null which means that call is hanged and documents are deleted
+            Navigator.pop(context);
+            break;
+
+          default:
+            break;
+        }
+      });
+    });
   }
 
   /// Create agora sdk instance and initialize
@@ -110,17 +99,13 @@ class _CallScreenState extends State<CallScreen> {
       int uid,
       int elapsed,
     ) {
-      if (widget.call.hasDialled) {
-        setOnScreenText("Dialling...");
-      }
       setState(() {
-        final info = 'onJoinChannelSuccess: $channel, uid: $uid';
+        final info = 'onJoinChannel: $channel, uid: $uid';
         _infoStrings.add(info);
       });
     };
 
     AgoraRtcEngine.onUserJoined = (int uid, int elapsed) {
-      clearOnScreenText();
       setState(() {
         final info = 'onUserJoined: $uid';
         _infoStrings.add(info);
@@ -158,7 +143,6 @@ class _CallScreenState extends State<CallScreen> {
     };
 
     AgoraRtcEngine.onLeaveChannel = () {
-      callMethods.endCall(call: widget.call);
       setState(() {
         _infoStrings.add('onLeaveChannel');
         _users.clear();
@@ -166,7 +150,6 @@ class _CallScreenState extends State<CallScreen> {
     };
 
     AgoraRtcEngine.onConnectionLost = () {
-      callMethods.endCall(call: widget.call);
       setState(() {
         final info = 'onConnectionLost';
         _infoStrings.add(info);
@@ -175,7 +158,6 @@ class _CallScreenState extends State<CallScreen> {
 
     AgoraRtcEngine.onUserOffline = (int uid, int reason) {
       // if call was picked
-      callMethods.endCall(call: widget.call);
 
       setState(() {
         final info = 'userOffline: $uid';
@@ -195,18 +177,6 @@ class _CallScreenState extends State<CallScreen> {
         _infoStrings.add(info);
       });
     };
-  }
-
-  setOnScreenText(val) {
-    setState(() {
-      onScreenText = val;
-    });
-  }
-
-  clearOnScreenText() {
-    setState(() {
-      onScreenText = "";
-    });
   }
 
   /// Helper function to get list of native views
@@ -271,66 +241,6 @@ class _CallScreenState extends State<CallScreen> {
     return Container();
   }
 
-  /// Toolbar layout
-  Widget _toolbar() {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RawMaterialButton(
-            onPressed: _onToggleMute,
-            child: Icon(
-              muted ? Icons.mic : Icons.mic_off,
-              color: muted ? Colors.white : Colors.blueAccent,
-              size: 20.0,
-            ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: muted ? Colors.blueAccent : Colors.white,
-            padding: const EdgeInsets.all(12.0),
-          ),
-          RawMaterialButton(
-            onPressed: () => callMethods.endCall(call: widget.call),
-            child: Icon(
-              Icons.call_end,
-              color: Colors.white,
-              size: 35.0,
-            ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.redAccent,
-            padding: const EdgeInsets.all(15.0),
-          ),
-          RawMaterialButton(
-            onPressed: _onSwitchCamera,
-            child: Icon(
-              Icons.switch_camera,
-              color: Colors.blueAccent,
-              size: 20.0,
-            ),
-            shape: CircleBorder(),
-            elevation: 2.0,
-            fillColor: Colors.white,
-            padding: const EdgeInsets.all(12.0),
-          )
-        ],
-      ),
-    );
-  }
-
-  void _onToggleMute() {
-    setState(() {
-      muted = !muted;
-    });
-    AgoraRtcEngine.muteLocalAudioStream(muted);
-  }
-
-  void _onSwitchCamera() {
-    AgoraRtcEngine.switchCamera();
-  }
-
   /// Info panel to show logs
   Widget _panel() {
     return Container(
@@ -381,21 +291,77 @@ class _CallScreenState extends State<CallScreen> {
     );
   }
 
-  Widget _onScreenText() {
-    return Positioned(
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Center(
-        child: Text(
-          onScreenText,
-          style: TextStyle(
-            fontSize: 15,
+  void _onToggleMute() {
+    setState(() {
+      muted = !muted;
+    });
+    AgoraRtcEngine.muteLocalAudioStream(muted);
+  }
+
+  void _onSwitchCamera() {
+    AgoraRtcEngine.switchCamera();
+  }
+
+  /// Toolbar layout
+  Widget _toolbar() {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: const EdgeInsets.symmetric(vertical: 48),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          RawMaterialButton(
+            onPressed: _onToggleMute,
+            child: Icon(
+              muted ? Icons.mic : Icons.mic_off,
+              color: muted ? Colors.white : Colors.blueAccent,
+              size: 20.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: muted ? Colors.blueAccent : Colors.white,
+            padding: const EdgeInsets.all(12.0),
           ),
-        ),
+          RawMaterialButton(
+            onPressed: () => callMethods.endCall(
+              call: widget.call,
+            ),
+            child: Icon(
+              Icons.call_end,
+              color: Colors.white,
+              size: 35.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.redAccent,
+            padding: const EdgeInsets.all(15.0),
+          ),
+          RawMaterialButton(
+            onPressed: _onSwitchCamera,
+            child: Icon(
+              Icons.switch_camera,
+              color: Colors.blueAccent,
+              size: 20.0,
+            ),
+            shape: CircleBorder(),
+            elevation: 2.0,
+            fillColor: Colors.white,
+            padding: const EdgeInsets.all(12.0),
+          )
+        ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // clear users
+    _users.clear();
+    // destroy sdk
+    AgoraRtcEngine.leaveChannel();
+    AgoraRtcEngine.destroy();
+    callStreamSubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -407,7 +373,6 @@ class _CallScreenState extends State<CallScreen> {
           children: <Widget>[
             _viewRows(),
             // _panel(),
-            _onScreenText(),
             _toolbar(),
           ],
         ),

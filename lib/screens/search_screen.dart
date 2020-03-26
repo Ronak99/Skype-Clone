@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
-import 'package:skype_clone/resources/firebase_repository.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/screens/chatscreens/chat_screen.dart';
 import 'package:skype_clone/utils/universal_variables.dart';

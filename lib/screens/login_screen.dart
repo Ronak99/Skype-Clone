@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
-import 'package:skype_clone/resources/firebase_repository.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'home_screen.dart';
@@ -12,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  FirebaseRepository _repository = FirebaseRepository();
   final AuthMethods _authMethods = AuthMethods();
 
   bool isLoginPressed = false;

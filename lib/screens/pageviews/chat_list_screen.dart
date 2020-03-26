@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
-import 'package:skype_clone/resources/firebase_repository.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'package:skype_clone/utils/utilities.dart';

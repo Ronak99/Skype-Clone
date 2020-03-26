@@ -11,21 +11,9 @@ import 'package:meta/meta.dart';
 class FirebaseRepository {
   FirebaseMethods _firebaseMethods = FirebaseMethods();
 
-
-  Future<void> addMessageToDb(Message message, User sender, User receiver) =>
-      _firebaseMethods.addMessageToDb(message, sender, receiver);
-
   Future<String> uploadImageToStorage(File imageFile) =>
       _firebaseMethods.uploadImageToStorage(imageFile);
 
-  // void showLoading(String receiverId, String senderId) =>
-  //     _firebaseMethods.showLoading(receiverId, senderId);
-
-  // void hideLoading(String receiverId, String senderId) =>
-  //     _firebaseMethods.hideLoading(receiverId, senderId);
-
-  void uploadImageMsgToDb(String url, String receiverId, String senderId) =>
-      _firebaseMethods.setImageMsg(url, receiverId, senderId);
 
   void uploadImage(
           {@required File image,

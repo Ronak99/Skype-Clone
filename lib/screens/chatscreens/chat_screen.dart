@@ -11,6 +11,7 @@ import 'package:skype_clone/models/message.dart';
 import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/provider/image_upload_provider.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
+import 'package:skype_clone/resources/chat_methods.dart';
 import 'package:skype_clone/resources/firebase_repository.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
@@ -35,6 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
   FocusNode textFieldFocus = FocusNode();
 
   FirebaseRepository _repository = FirebaseRepository();
+  final ChatMethods _chatMethods = ChatMethods();
   final AuthMethods _authMethods = AuthMethods();
 
   ScrollController _listScrollController = ScrollController();
@@ -340,7 +342,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       textFieldController.text = "";
 
-      _repository.addMessageToDb(_message, sender, widget.receiver);
+      _chatMethods.addMessageToDb(_message, sender, widget.receiver);
     }
 
     return Container(

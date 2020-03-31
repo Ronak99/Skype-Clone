@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skype_clone/resources/firebase_repository.dart';
+import 'package:skype_clone/resources/auth_methods.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'package:skype_clone/utils/utilities.dart';
@@ -11,18 +11,16 @@ class ChatListScreen extends StatefulWidget {
   _ChatListScreenState createState() => _ChatListScreenState();
 }
 
-//global
-final FirebaseRepository _repository = FirebaseRepository();
-
 class _ChatListScreenState extends State<ChatListScreen> {
+  final AuthMethods _authMethods = AuthMethods();
+
   String currentUserId;
   String initials = "";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _repository.getCurrentUser().then((user) {
+    _authMethods.getCurrentUser().then((user) {
       setState(() {
         currentUserId = user.uid;
         initials = Utils.getInitials(user.displayName);

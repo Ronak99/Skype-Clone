@@ -1,28 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'user.dart';
 
-class Contact extends User{
+class Contact  {
   String uid;
-  String name;
-  String profilePhoto;
+  Timestamp addedOn;
 
   Contact({
     this.uid,
-    this.name,
-    this.profilePhoto,
+    this.addedOn,
   });
 
-  @override
-  Map toMap(User user) {
+  Map toMap(Contact contact) {
     var data = Map<String, dynamic>();
-    data['contact_id'] = user.uid;
-    data['contact_name'] = user.name;
-    data["contact_photo"] = user.profilePhoto;
+    data['contact_id'] = contact.uid;
+    data['added_on'] = contact.addedOn;
     return data;
   }
 
   Contact.fromMap(Map<String, dynamic> mapData) {
     this.uid = mapData['contact_id'];
-    this.name = mapData['contact_name'];
-    this.profilePhoto = mapData['contact_photo'];
+    this.addedOn = mapData["added_on"];
   }
 }

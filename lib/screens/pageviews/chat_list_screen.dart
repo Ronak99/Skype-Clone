@@ -1,10 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skype_clone/models/contact.dart';
+import 'package:skype_clone/provider/user_provider.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
+import 'package:skype_clone/resources/chat_methods.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
+import 'package:skype_clone/screens/pageviews/widgets/contact_view.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
-import 'package:skype_clone/utils/utilities.dart';
 import 'package:skype_clone/widgets/appbar.dart';
-import 'package:skype_clone/widgets/custom_tile.dart';
+import 'package:skype_clone/widgets/quiet_box.dart';
+
+import 'widgets/new_chat_button.dart';
+import 'widgets/user_circle.dart';
 
 class ChatListScreen extends StatefulWidget {
   @override
@@ -14,21 +22,25 @@ class ChatListScreen extends StatefulWidget {
 class _ChatListScreenState extends State<ChatListScreen> {
   final AuthMethods _authMethods = AuthMethods();
 
-  String currentUserId;
-  String initials = "";
+  // replace currentUserId fetchers with userProvider
+
+  // String currentUserId;
+  // String initials = "";
 
   @override
   void initState() {
     super.initState();
-    _authMethods.getCurrentUser().then((user) {
-      setState(() {
-        currentUserId = user.uid;
-        initials = Utils.getInitials(user.displayName);
-      });
-    });
+    // _authMethods.getCurrentUser().then((user) {
+    //   setState(() {
+    //     currentUserId = user.uid;
+    //     initials = "a";
+    //   });
+    // });
   }
 
   CustomAppBar customAppBar(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     return CustomAppBar(
       leading: IconButton(
         icon: Icon(
@@ -37,7 +49,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         ),
         onPressed: () {},
       ),
-      title: UserCircle(initials),
+      title: UserCircle(),
       centerTitle: true,
       actions: <Widget>[
         IconButton(
@@ -67,135 +79,46 @@ class _ChatListScreenState extends State<ChatListScreen> {
         backgroundColor: UniversalVariables.blackColor,
         appBar: customAppBar(context),
         floatingActionButton: NewChatButton(),
-        body: ChatListContainer(currentUserId),
+        body: ChatListContainer(),
       ),
     );
   }
 }
 
-class ChatListContainer extends StatefulWidget {
-  final String currentUserId;
+class ChatListContainer extends StatelessWidget {
 
-  ChatListContainer(this.currentUserId);
+  final ChatMethods _chatMethods = ChatMethods();
 
-  @override
-  _ChatListContainerState createState() => _ChatListContainerState();
-}
-
-class _ChatListContainerState extends State<ChatListContainer> {
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     return Container(
-      child: ListView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: 2,
-        itemBuilder: (context, index) {
-          return CustomTile(
-            mini: false,
-            onTap: () {},
-            title: Text(
-              "The CS Guy",
-              style: TextStyle(
-                  color: Colors.white, fontFamily: "Arial", fontSize: 19),
-            ),
-            subtitle: Text(
-              "Hello",
-              style: TextStyle(
-                color: UniversalVariables.greyColor,
-                fontSize: 14,
-              ),
-            ),
-            leading: Container(
-              constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
-              child: Stack(
-                children: <Widget>[
-                  CircleAvatar(
-                    maxRadius: 30,
-                    backgroundColor: Colors.grey,
-                    backgroundImage: NetworkImage(
-                        "https://yt3.ggpht.com/a/AGF-l7_zT8BuWwHTymaQaBptCy7WrsOD72gYGp-puw=s900-c-k-c0xffffffff-no-rj-mo"),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      height: 13,
-                      width: 13,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: UniversalVariables.onlineDotColor,
-                          border: Border.all(
-                              color: UniversalVariables.blackColor, width: 2)),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
+      child: StreamBuilder<QuerySnapshot>(
+        stream: _chatMethods.fetchContacts(
+          userId: userProvider.getUser.uid,
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var docList = snapshot.data.documents;
+
+            if (docList.isNotEmpty) {
+              return ListView.builder(
+                padding: EdgeInsets.all(10),
+                itemCount: docList.length,
+                itemBuilder: (context, index) {
+                  Contact contact = Contact.fromMap(docList[index].data);
+                  return ContactView(contact);
+                },
+              );
+            }
+
+            return QuiteBox();
+          }
+
+          return Center(child: CircularProgressIndicator());
         },
       ),
-    );
-  }
-}
-
-class UserCircle extends StatelessWidget {
-  final String text;
-
-  UserCircle(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(50),
-        color: UniversalVariables.separatorColor,
-      ),
-      child: Stack(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: UniversalVariables.lightBlueColor,
-                fontSize: 13,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              height: 12,
-              width: 12,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border:
-                    Border.all(color: UniversalVariables.blackColor, width: 2),
-                color: UniversalVariables.onlineDotColor,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class NewChatButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: UniversalVariables.fabGradient,
-          borderRadius: BorderRadius.circular(50)),
-      child: Icon(
-        Icons.edit,
-        color: Colors.white,
-        size: 25,
-      ),
-      padding: EdgeInsets.all(15),
     );
   }
 }

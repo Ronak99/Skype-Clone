@@ -10,7 +10,9 @@ import 'package:skype_clone/enum/view_state.dart';
 import 'package:skype_clone/models/message.dart';
 import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/provider/image_upload_provider.dart';
-import 'package:skype_clone/resources/firebase_repository.dart';
+import 'package:skype_clone/resources/auth_methods.dart';
+import 'package:skype_clone/resources/chat_methods.dart';
+import 'package:skype_clone/resources/storage_methods.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
 import 'package:skype_clone/utils/call_utilities.dart';
@@ -33,7 +35,9 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textFieldController = TextEditingController();
   FocusNode textFieldFocus = FocusNode();
 
-  FirebaseRepository _repository = FirebaseRepository();
+  final StorageMethods _storageMethods = StorageMethods();
+  final ChatMethods _chatMethods = ChatMethods();
+  final AuthMethods _authMethods = AuthMethods();
 
   ScrollController _listScrollController = ScrollController();
 
@@ -50,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _repository.getCurrentUser().then((user) {
+    _authMethods.getCurrentUser().then((user) {
       _currentUserId = user.uid;
 
       setState(() {
@@ -338,7 +342,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       textFieldController.text = "";
 
-      _repository.addMessageToDb(_message, sender, widget.receiver);
+      _chatMethods.addMessageToDb(_message, sender, widget.receiver);
     }
 
     return Container(
@@ -443,7 +447,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
-    _repository.uploadImage(
+    _storageMethods.uploadImage(
         image: selectedImage,
         receiverId: widget.receiver.uid,
         senderId: _currentUserId,

@@ -38,7 +38,7 @@ This project is going to be divided in several different branches. As I release 
 7. Chat Screen UI - [Video](https://youtu.be/h5wq7OK-cSI) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-7-Making_ChatScreen_UI)
 
 8. Exchaning Messages - [Video](https://youtu.be/27IpIJeTtwA) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-8-Exchanging_Messages_Via_Firebase)
--- yaha se karna
+
 9. Cleanup And Rearrangements - [Video](https://youtu.be/YTonb-VXdio) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-9-Cleanup_and_Rearrangement)
 
 10. Emojis in Flutter - [Video](https://youtu.be/Hc7r62fMsTs) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-10-Emojies_In_Flutter)

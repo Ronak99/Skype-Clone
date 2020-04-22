@@ -15,13 +15,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
-  //resources
-  final AuthMethods _authMethods = AuthMethods();
-  UserProvider userProvider;
-
-  // local
   PageController pageController;
   int _page = 0;
+  UserProvider userProvider;
+
+
+  final AuthMethods _authMethods = AuthMethods();
 
   @override
   void initState() {
@@ -31,8 +30,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       userProvider = Provider.of<UserProvider>(context, listen: false);
       await userProvider.refreshUser();
 
-      _authMethods.setUserState(userProvider.getUser.uid, UserState.Online);
+      _authMethods.setUserState(
+        userId: userProvider.getUser.uid,
+        userState: UserState.Online, 
+      );
     });
+
+    WidgetsBinding.instance.addObserver(this);
 
     pageController = PageController();
     WidgetsBinding.instance.addObserver(this);
@@ -44,6 +48,43 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    String currentUserId =
+        (userProvider != null && userProvider.getUser != null)
+            ? userProvider.getUser.uid
+            : "";
+
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        currentUserId != null
+            ? _authMethods.setUserState(
+                userId: currentUserId, userState: UserState.Online)
+            : print("resume state");
+        break;
+      case AppLifecycleState.inactive:
+        currentUserId != null
+            ? _authMethods.setUserState(
+                userId: currentUserId, userState: UserState.Offline)
+            : print("inactive state");
+        break;
+      case AppLifecycleState.paused:
+        currentUserId != null
+            ? _authMethods.setUserState(
+                userId: currentUserId, userState: UserState.Waiting)
+            : print("paused state");
+        break;
+      case AppLifecycleState.detached:
+        currentUserId != null
+            ? _authMethods.setUserState(
+                userId: currentUserId, userState: UserState.Offline)
+            : print("detached state");
+        break;
+    }
+  }
+
   void onPageChanged(int page) {
     setState(() {
       _page = page;
@@ -52,39 +93,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   void navigationTapped(int page) {
     pageController.jumpToPage(page);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    String currentUserId =
-        (userProvider != null && userProvider.getUser != null)
-            ? userProvider.getUser.uid
-            : "";
-    super.didChangeAppLifecycleState(state);
-    switch (state) {
-      case AppLifecycleState.paused:
-        currentUserId != null
-            ? _authMethods.setUserState(currentUserId, UserState.Waiting)
-            : print("paused state");
-        break;
-      case AppLifecycleState.resumed:
-        currentUserId != null
-            ? _authMethods.setUserState(currentUserId, UserState.Online)
-            : print("resumed state");
-
-        break;
-      case AppLifecycleState.inactive:
-        currentUserId != null
-            ? _authMethods.setUserState(currentUserId, UserState.Offline)
-            : print("paused state");
-        break;
-      case AppLifecycleState.detached:
-        currentUserId != null
-            ? _authMethods.setUserState(currentUserId, UserState.Offline)
-            : print("paused state");
-        break;
-      default:
-    }
   }
 
   @override

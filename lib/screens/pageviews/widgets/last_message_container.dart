@@ -5,7 +5,9 @@ import 'package:skype_clone/models/message.dart';
 class LastMessageContainer extends StatelessWidget {
   final stream;
 
-  LastMessageContainer({@required this.stream});
+  LastMessageContainer({
+    @required this.stream,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,6 @@ class LastMessageContainer extends StatelessWidget {
 
           if (docList.isNotEmpty) {
             Message message = Message.fromMap(docList.last.data);
-
             return SizedBox(
               width: MediaQuery.of(context).size.width * 0.6,
               child: Text(
@@ -39,7 +40,6 @@ class LastMessageContainer extends StatelessWidget {
             ),
           );
         }
-
         return Text(
           "..",
           style: TextStyle(

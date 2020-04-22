@@ -35,11 +35,10 @@ class UserCircle extends StatelessWidget {
               height: 12,
               width: 12,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border:
-                    Border.all(color: UniversalVariables.blackColor, width: 2),
-                color: UniversalVariables.onlineDotColor,
-              ),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: UniversalVariables.blackColor, width: 2),
+                  color: UniversalVariables.onlineDotColor),
             ),
           )
         ],

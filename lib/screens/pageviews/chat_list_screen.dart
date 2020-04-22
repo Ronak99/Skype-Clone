@@ -7,6 +7,9 @@ import 'package:skype_clone/resources/auth_methods.dart';
 import 'package:skype_clone/resources/chat_methods.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/screens/pageviews/widgets/contact_view.dart';
+import 'package:skype_clone/screens/pageviews/widgets/new_chat_button.dart';
+import 'package:skype_clone/screens/pageviews/widgets/quiet_box.dart';
+import 'package:skype_clone/screens/pageviews/widgets/user_circle.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'package:skype_clone/widgets/appbar.dart';
 import 'package:skype_clone/widgets/quiet_box.dart';
@@ -14,30 +17,7 @@ import 'package:skype_clone/widgets/quiet_box.dart';
 import 'widgets/new_chat_button.dart';
 import 'widgets/user_circle.dart';
 
-class ChatListScreen extends StatefulWidget {
-  @override
-  _ChatListScreenState createState() => _ChatListScreenState();
-}
-
-class _ChatListScreenState extends State<ChatListScreen> {
-  final AuthMethods _authMethods = AuthMethods();
-
-  // replace currentUserId fetchers with userProvider
-
-  // String currentUserId;
-  // String initials = "";
-
-  @override
-  void initState() {
-    super.initState();
-    // _authMethods.getCurrentUser().then((user) {
-    //   setState(() {
-    //     currentUserId = user.uid;
-    //     initials = "a";
-    //   });
-    // });
-  }
-
+class ChatListScreen extends StatelessWidget {
   CustomAppBar customAppBar(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
 
@@ -86,7 +66,6 @@ class _ChatListScreenState extends State<ChatListScreen> {
 }
 
 class ChatListContainer extends StatelessWidget {
-
   final ChatMethods _chatMethods = ChatMethods();
 
   @override
@@ -95,30 +74,29 @@ class ChatListContainer extends StatelessWidget {
 
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-        stream: _chatMethods.fetchContacts(
-          userId: userProvider.getUser.uid,
-        ),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var docList = snapshot.data.documents;
+          stream: _chatMethods.fetchContacts(
+            userId: userProvider.getUser.uid,
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var docList = snapshot.data.documents;
 
-            if (docList.isNotEmpty) {
+              if (docList.isEmpty) {
+                return QuietBox();
+              }
               return ListView.builder(
                 padding: EdgeInsets.all(10),
                 itemCount: docList.length,
                 itemBuilder: (context, index) {
                   Contact contact = Contact.fromMap(docList[index].data);
+
                   return ContactView(contact);
                 },
               );
             }
 
-            return QuiteBox();
-          }
-
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
+            return Center(child: CircularProgressIndicator());
+          }),
     );
   }
 }

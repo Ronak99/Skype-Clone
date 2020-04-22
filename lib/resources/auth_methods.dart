@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:skype_clone/constants/strings.dart';
 import 'package:skype_clone/enum/user_state.dart';
@@ -36,15 +37,12 @@ class AuthMethods {
     try {
       DocumentSnapshot documentSnapshot =
           await _userCollection.document(id).get();
-
       return User.fromMap(documentSnapshot.data);
     } catch (e) {
       print(e);
       return null;
     }
   }
-
-  
 
   Future<FirebaseUser> signIn() async {
     GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
@@ -105,12 +103,14 @@ class AuthMethods {
     return await _auth.signOut();
   }
 
-  // change user state
-  void setUserState(String userId, UserState userState) {
+  void setUserState({@required String userId, @required UserState userState}) {
     int stateNum = Utils.stateToNum(userState);
 
-    _userCollection.document(userId).updateData({"state": stateNum});
+    _userCollection.document(userId).updateData({
+      "state": stateNum,
+    });
   }
 
-  Stream<DocumentSnapshot> getUserStream(uid) => _userCollection.document(uid).snapshots();
+  Stream<DocumentSnapshot> getUserStream({@required String uid}) =>
+      _userCollection.document(uid).snapshots();
 }

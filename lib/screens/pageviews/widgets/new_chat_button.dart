@@ -6,9 +6,8 @@ class NewChatButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: UniversalVariables.fabGradient,
-        borderRadius: BorderRadius.circular(50),
-      ),
+          gradient: UniversalVariables.fabGradient,
+          borderRadius: BorderRadius.circular(50)),
       child: Icon(
         Icons.edit,
         color: Colors.white,

@@ -1,1 +1,5 @@
-enum UserState { Offline, Online, Waiting }
+enum UserState{
+  Offline,
+  Online,
+  Waiting,
+}

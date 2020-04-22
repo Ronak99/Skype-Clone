@@ -27,7 +27,7 @@ class OnlineDotIndicator extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: StreamBuilder<DocumentSnapshot>(
-        stream: _authMethods.getUserStream(uid),
+        stream: _authMethods.getUserStream(uid: uid),
         builder: (context, snapshot) {
           User _user;
           if (snapshot.hasData && snapshot.data.data != null) {

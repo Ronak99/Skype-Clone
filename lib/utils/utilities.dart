@@ -51,7 +51,7 @@ class Utils {
   }
 
   static UserState numToState(int number) {
-    switch (number) {
+     switch (number) {
       case 0:
         return UserState.Offline;
 

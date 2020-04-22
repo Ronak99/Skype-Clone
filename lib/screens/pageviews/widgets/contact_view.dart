@@ -7,9 +7,10 @@ import 'package:skype_clone/resources/auth_methods.dart';
 import 'package:skype_clone/resources/chat_methods.dart';
 import 'package:skype_clone/screens/chatscreens/chat_screen.dart';
 import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
-import 'package:skype_clone/screens/pageviews/widgets/last_message_container.dart';
+import 'package:skype_clone/screens/pageviews/widgets/online_dot_indicator.dart';
 import 'package:skype_clone/widgets/custom_tile.dart';
-import 'package:skype_clone/widgets/online_dot_indicator.dart';
+
+import 'last_message_container.dart';
 
 class ContactView extends StatelessWidget {
   final Contact contact;
@@ -22,13 +23,16 @@ class ContactView extends StatelessWidget {
     return FutureBuilder<User>(
       future: _authMethods.getUserDetailsById(contact.uid),
       builder: (context, snapshot) {
-        
         if (snapshot.hasData) {
           User user = snapshot.data;
-          return ViewLayout(contact: user);
-        }
 
-        return CircularProgressIndicator();
+          return ViewLayout(
+            contact: user,
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -49,15 +53,14 @@ class ViewLayout extends StatelessWidget {
     return CustomTile(
       mini: false,
       onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatScreen(
-            receiver: contact,
-          ),
-        ),
-      ),
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              receiver: contact,
+            ),
+          )),
       title: Text(
-        contact?.name ?? "..",
+        (contact != null ? contact.name : null) != null ? contact.name : "..",
         style:
             TextStyle(color: Colors.white, fontFamily: "Arial", fontSize: 19),
       ),

@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:image/image.dart' as Im;
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:skype_clone/enum/user_state.dart';
+import 'package:skype_clone/resources/auth_methods.dart';
 
 class Utils {
   static String getUsername(String email) {
@@ -51,7 +53,7 @@ class Utils {
   }
 
   static UserState numToState(int number) {
-     switch (number) {
+    switch (number) {
       case 0:
         return UserState.Offline;
 
@@ -62,4 +64,5 @@ class Utils {
         return UserState.Waiting;
     }
   }
+
 }

@@ -52,8 +52,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void performLogin() async {
-    print("tring to perform login");
-
+  
     setState(() {
       isLoginPressed = true;
     });

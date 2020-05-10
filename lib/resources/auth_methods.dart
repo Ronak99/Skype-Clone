@@ -44,22 +44,24 @@ class AuthMethods {
     }
   }
 
-    Future<FirebaseUser> signIn() async {
-      try {
-        GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
-        GoogleSignInAuthentication _signInAuthentication =
-            await _signInAccount.authentication;
+  Future<FirebaseUser> signIn() async {
+    try {
+      GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
+      GoogleSignInAuthentication _signInAuthentication =
+          await _signInAccount.authentication;
 
-        final AuthCredential credential = GoogleAuthProvider.getCredential(
-            accessToken: _signInAuthentication.accessToken,
-            idToken: _signInAuthentication.idToken);
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: _signInAuthentication.accessToken,
+          idToken: _signInAuthentication.idToken);
 
-        FirebaseUser user = await _auth.signInWithCredential(credential);
-        return user;
-      } catch (e) {
-        return null;
-      }
+      FirebaseUser user = await _auth.signInWithCredential(credential);
+      return user;
+    } catch (e) {
+      print("Auth methods error");
+      print(e);
+      return null;
     }
+  }
 
   Future<bool> authenticateUser(FirebaseUser user) async {
     QuerySnapshot result = await firestore

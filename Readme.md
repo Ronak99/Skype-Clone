@@ -38,4 +38,4 @@ This project is going to be divided in several different branches. As I release 
 
 13. Populating Chat List Screen - [Video](https://youtu.be/Yjtax0D2MTg) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-13-Populate_Chat_List_Screen)
 
-14. Making User Profile - (to be updated) [Video](https://youtu.be/Yjtax0D2MTg) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-14-Making_User_Profile)
+14. Making User Profile - [Video](https://youtu.be/1SDZ_CAykgY) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-14-Making_User_Profile)

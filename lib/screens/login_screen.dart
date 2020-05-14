@@ -57,14 +57,6 @@ class LoginScreenState extends State<LoginScreen> {
       isLoginPressed = true;
     });
 
-    // _authMethods.signIn().then((FirebaseUser user) {
-    //   if (user != null) {
-    //     authenticateUser(user);
-    //   } else {
-    //     print("There was an error");
-    //   }
-    // });
-
     FirebaseUser user = await _authMethods.signIn();
 
     if (user != null) {

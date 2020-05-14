@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skype_clone/enum/user_state.dart';
 import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/provider/user_provider.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
@@ -10,15 +11,27 @@ import 'package:skype_clone/widgets/appbar.dart';
 import 'shimmering_logo.dart';
 
 class UserDetailsContainer extends StatelessWidget {
+  final AuthMethods authMethods = AuthMethods();
+
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     signOut() async {
       final bool isLoggedOut = await AuthMethods().signOut();
       if (isLoggedOut) {
+        // set userState to offline as the user logs out'
+        authMethods.setUserState(
+          userId: userProvider.getUser.uid,
+          userState: UserState.Offline,
+        );
+
+        // move the user to login screen
         Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-            (Route<dynamic> route) => false);
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+          (Route<dynamic> route) => false,
+        );
       }
     }
 

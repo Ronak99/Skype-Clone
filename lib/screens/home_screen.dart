@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:skype_clone/enum/user_state.dart';
 import 'package:skype_clone/provider/user_provider.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
+import 'package:skype_clone/resources/local_db/log_repository.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
-import 'package:skype_clone/screens/pageviews/chat_list_screen.dart';
+import 'package:skype_clone/screens/pageviews/chats/chat_list_screen.dart';
+import 'package:skype_clone/screens/pageviews/logs/log_screen.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,12 +21,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   int _page = 0;
   UserProvider userProvider;
 
-
   final AuthMethods _authMethods = AuthMethods();
+  // final LogRepository _logRepository = LogRepository(isHive: true);
+  final LogRepository _logRepository = LogRepository(isHive: false);
 
   @override
   void initState() {
     super.initState();
+
+    _logRepository.init();
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -32,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
       _authMethods.setUserState(
         userId: userProvider.getUser.uid,
-        userState: UserState.Online, 
+        userState: UserState.Online,
       );
     });
 
@@ -104,15 +109,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         backgroundColor: UniversalVariables.blackColor,
         body: PageView(
           children: <Widget>[
-            Container(
-              child: ChatListScreen(),
-            ),
-            Center(
-              child: Text(
-                "Call Logs",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            ChatListScreen(),
+            LogScreen(),
             Center(
                 child: Text(
               "Contact Screen",

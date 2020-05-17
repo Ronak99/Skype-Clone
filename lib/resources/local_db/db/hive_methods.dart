@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:skype_clone/models/log.dart';
-import 'package:skype_clone/resources/local_db/log_methods.dart';
+import 'package:skype_clone/resources/local_db/interface/log_interface.dart';
 
-class HiveMethods implements LogMethods {
+class HiveMethods implements LogInterface {
   final _hiveBox = "log_box";
 
   @override

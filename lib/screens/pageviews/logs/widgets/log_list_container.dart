@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skype_clone/constants/strings.dart';
 import 'package:skype_clone/models/log.dart';
-import 'package:skype_clone/resources/local_db/log_repository.dart';
+import 'package:skype_clone/resources/local_db/repository/log_repository.dart';
 import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
 import 'package:skype_clone/screens/pageviews/chats/widgets/quiet_box.dart';
 import 'package:skype_clone/utils/utilities.dart';
@@ -14,7 +14,7 @@ class LogListContainer extends StatefulWidget {
 
 class _LogListContainerState extends State<LogListContainer> {
   // final LogRepository logRepository = LogRepository(isHive: true);
-  final LogRepository logRepository = LogRepository(isHive: false);
+  // final LogRepository logRepository = LogRepository(isHive: false);
 
   getIcon(String callStatus) {
     Icon _icon;
@@ -55,7 +55,7 @@ class _LogListContainerState extends State<LogListContainer> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<dynamic>(
-      future: logRepository.getLogs(),
+      future: LogRepository.getLogs(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -68,7 +68,7 @@ class _LogListContainerState extends State<LogListContainer> {
             return ListView.builder(
               itemCount: logList.length,
               itemBuilder: (context, i) {
-                Log _log = Log.fromMap(logList[i]);
+                Log _log = logList[i];
                 bool hasDialled = _log.callStatus == CALL_STATUS_DIALLED;
 
                 return CustomTile(
@@ -89,7 +89,7 @@ class _LogListContainerState extends State<LogListContainer> {
                           child: Text("YES"),
                           onPressed: () async {
                             Navigator.maybePop(context);
-                            await logRepository.deleteLogs(i);
+                            await LogRepository.deleteLogs(i);
                             if (mounted) {
                               setState(() {});
                             }

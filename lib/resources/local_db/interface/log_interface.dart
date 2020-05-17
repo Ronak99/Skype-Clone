@@ -1,6 +1,6 @@
 import 'package:skype_clone/models/log.dart';
 
-abstract class LogMethods {
+abstract class LogInterface {
   init();
 
   addLogs(Log log);

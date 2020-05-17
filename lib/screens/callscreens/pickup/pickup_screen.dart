@@ -3,7 +3,7 @@ import 'package:skype_clone/constants/strings.dart';
 import 'package:skype_clone/models/call.dart';
 import 'package:skype_clone/models/log.dart';
 import 'package:skype_clone/resources/call_methods.dart';
-import 'package:skype_clone/resources/local_db/log_repository.dart';
+import 'package:skype_clone/resources/local_db/repository/log_repository.dart';
 import 'package:skype_clone/screens/callscreens/call_screen.dart';
 import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
 import 'package:skype_clone/utils/permissions.dart';
@@ -22,7 +22,7 @@ class PickupScreen extends StatefulWidget {
 class _PickupScreenState extends State<PickupScreen> {
   final CallMethods callMethods = CallMethods();
   // final LogRepository logRepository = LogRepository(isHive: true);
-  final LogRepository logRepository = LogRepository(isHive: false);
+  // final LogRepository logRepository = LogRepository(isHive: false);
 
   bool isCallMissed = true;
 
@@ -36,7 +36,7 @@ class _PickupScreenState extends State<PickupScreen> {
       callStatus: callStatus,
     );
 
-    logRepository.addLogs(log);
+    LogRepository.addLogs(log);
   }
 
   @override

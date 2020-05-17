@@ -6,13 +6,14 @@ import 'package:skype_clone/models/call.dart';
 import 'package:skype_clone/models/log.dart';
 import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/resources/call_methods.dart';
-import 'package:skype_clone/resources/local_db/log_repository.dart';
+import 'package:skype_clone/resources/local_db/repository/log_repository.dart';
 import 'package:skype_clone/screens/callscreens/call_screen.dart';
 
 class CallUtils {
   static final CallMethods callMethods = CallMethods();
   // static final LogRepository logRepository = LogRepository(isHive: true);
-  static final LogRepository logRepository = LogRepository(isHive: false);
+  
+  // static final LogRepository logRepository = LogRepository(isHive: false);
 
 
   static dial({User from, User to, context}) async {
@@ -41,7 +42,7 @@ class CallUtils {
 
     if (callMade) {
       // enter log
-      logRepository.addLogs(log);
+      LogRepository.addLogs(log);
 
       Navigator.push(
           context,

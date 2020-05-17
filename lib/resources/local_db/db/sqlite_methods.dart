@@ -4,9 +4,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:skype_clone/models/log.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:skype_clone/resources/local_db/log_methods.dart';
+import 'package:skype_clone/resources/local_db/interface/log_interface.dart';
 
-class SqfliteMethods implements LogMethods {
+class SqliteMethods implements LogInterface {
   static Database _db;
 
   //database name

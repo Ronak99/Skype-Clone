@@ -7,7 +7,7 @@ import 'package:skype_clone/resources/auth_methods.dart';
 import 'package:skype_clone/resources/chat_methods.dart';
 import 'package:skype_clone/screens/chatscreens/chat_screen.dart';
 import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
-import 'package:skype_clone/screens/pageviews/widgets/online_dot_indicator.dart';
+import 'package:skype_clone/screens/pageviews/chats/widgets/online_dot_indicator.dart';
 import 'package:skype_clone/widgets/custom_tile.dart';
 
 import 'last_message_container.dart';

@@ -11,10 +11,6 @@ import 'package:skype_clone/screens/callscreens/call_screen.dart';
 
 class CallUtils {
   static final CallMethods callMethods = CallMethods();
-  // static final LogRepository logRepository = LogRepository(isHive: true);
-  
-  // static final LogRepository logRepository = LogRepository(isHive: false);
-
 
   static dial({User from, User to, context}) async {
     Call call = Call(

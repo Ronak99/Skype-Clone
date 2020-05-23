@@ -6,7 +6,10 @@ import 'package:skype_clone/models/log.dart';
 import 'package:skype_clone/resources/local_db/interface/log_interface.dart';
 
 class HiveMethods implements LogInterface {
-  final _hiveBox = "log_box";
+  String _hiveBox;
+
+  @override
+  openDb(String dbName) => _hiveBox = dbName;
 
   @override
   init() async {

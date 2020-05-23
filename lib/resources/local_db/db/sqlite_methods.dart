@@ -7,22 +7,22 @@ import 'package:path/path.dart';
 import 'package:skype_clone/resources/local_db/interface/log_interface.dart';
 
 class SqliteMethods implements LogInterface {
-  static Database _db;
+  Database _db;
 
   //database name
-  static const String DB_NAME = 'LogDB';
+  String dbName;
 
   // table name
-  static const String TABLENAME = 'CallLogs';
+  String tableName = 'CallLogs';
 
   //columns
-  static const String ID = 'log_id';
-  static const String CALLER_NAME = 'caller_name';
-  static const String CALLER_PIC = 'caller_pic';
-  static const String RECEIVER_NAME = 'receiver_name';
-  static const String RECEIVER_PIC = 'receiver_pic';
-  static const String CALL_STATUS = 'call_status';
-  static const String TIMESTAMP = 'timestamp';
+  String id = 'log_id';
+  String callerName = 'caller_name';
+  String callerPic = 'caller_pic';
+  String receiverName = 'receiver_name';
+  String receiverPic = 'receiver_pic';
+  String callStatus = 'call_status';
+  String timestamp = 'timestamp';
 
   Future<Database> get db async {
     if (_db != null) {
@@ -35,9 +35,12 @@ class SqliteMethods implements LogInterface {
   }
 
   @override
+  openDb(_dbName) => dbName = _dbName;
+
+  @override
   init() async {
     final Directory dir = await getApplicationDocumentsDirectory();
-    String path = join(dir.path, DB_NAME);
+    String path = join(dir.path, dbName);
     var db = await openDatabase(
       path,
       version: 1,
@@ -48,7 +51,7 @@ class SqliteMethods implements LogInterface {
 
   _onCreate(Database db, int version) async {
     String createTableQuery =
-        "CREATE TABLE $TABLENAME ($ID INTEGER PRIMARY KEY, $CALLER_NAME TEXT, $CALLER_PIC TEXT, $RECEIVER_NAME TEXT, $RECEIVER_PIC TEXT, $CALL_STATUS TEXT, $TIMESTAMP TEXT)";
+        "CREATE TABLE $tableName ($id INTEGER PRIMARY KEY, $callerName TEXT, $callerPic TEXT, $receiverName TEXT, $receiverPic TEXT, $callStatus TEXT, $timestamp TEXT)";
 
     await db.execute(createTableQuery);
     print("creating table");
@@ -57,21 +60,21 @@ class SqliteMethods implements LogInterface {
   @override
   addLogs(Log log) async {
     var dbClient = await db;
-    await dbClient.insert(TABLENAME, log.toMap(log));
+    await dbClient.insert(tableName, log.toMap(log));
   }
 
   @override
   Future<List<Log>> getLogs() async {
     try {
       var dbClient = await db;
-      List<Map> maps = await dbClient.query(TABLENAME, columns: [
-        ID,
-        CALLER_NAME,
-        CALLER_PIC,
-        RECEIVER_NAME,
-        RECEIVER_PIC,
-        CALL_STATUS,
-        TIMESTAMP,
+      List<Map> maps = await dbClient.query(tableName, columns: [
+        id,
+        callerName,
+        callerPic,
+        receiverName,
+        receiverPic,
+        callStatus,
+        timestamp,
       ]);
       //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
       List<Log> logList = [];
@@ -92,7 +95,7 @@ class SqliteMethods implements LogInterface {
   deleteLogs(int logId) async {
     var client = await db;
 
-    return await client.delete(TABLENAME, where: '$ID = ?', whereArgs: [logId]);
+    return await client.delete(tableName, where: '$id = ?', whereArgs: [logId]);
   }
 
   @override

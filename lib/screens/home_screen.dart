@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -38,12 +37,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         userId: userProvider.getUser.uid,
         userState: UserState.Online,
       );
+
+      LogRepository.init(
+        isHive: false,
+        dbName: userProvider.getUser.uid,
+      );
     });
 
     WidgetsBinding.instance.addObserver(this);
 
     pageController = PageController();
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override

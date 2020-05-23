@@ -13,9 +13,6 @@ class LogListContainer extends StatefulWidget {
 }
 
 class _LogListContainerState extends State<LogListContainer> {
-  // final LogRepository logRepository = LogRepository(isHive: true);
-  // final LogRepository logRepository = LogRepository(isHive: false);
-
   getIcon(String callStatus) {
     Icon _icon;
     double _iconSize = 15;
@@ -61,6 +58,7 @@ class _LogListContainerState extends State<LogListContainer> {
           return Center(child: CircularProgressIndicator());
         }
 
+
         if (snapshot.hasData) {
           List<dynamic> logList = snapshot.data;
 
@@ -103,7 +101,7 @@ class _LogListContainerState extends State<LogListContainer> {
                     ),
                   ),
                   title: Text(
-                    hasDialled ? _log.receiverName : _log.callerName,
+                    hasDialled ? _log?.receiverName ?? ".." : _log?.callerName ?? "..s",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 17,

@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:skype_clone/enum/user_state.dart';
-import 'package:skype_clone/resources/auth_methods.dart';
 
 class Utils {
   static String getUsername(String email) {

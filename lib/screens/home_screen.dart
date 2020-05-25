@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:skype_clone/enum/user_state.dart';
 import 'package:skype_clone/provider/user_provider.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
+import 'package:skype_clone/resources/local_db/repository/log_repository.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/screens/pageviews/chats/chat_list_screen.dart';
 import 'package:skype_clone/screens/pageviews/logs/log_screen.dart';
@@ -21,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   UserProvider userProvider;
 
   final AuthMethods _authMethods = AuthMethods();
+  // final LogRepository _logRepository = LogRepository(isHive: true);
+  // final LogRepository _logRepository = LogRepository(isHive: false);
 
   @override
   void initState() {
@@ -34,12 +37,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         userId: userProvider.getUser.uid,
         userState: UserState.Online,
       );
+
+      LogRepository.init(
+        isHive: false,
+        dbName: userProvider.getUser.uid,
+      );
     });
 
     WidgetsBinding.instance.addObserver(this);
 
     pageController = PageController();
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override

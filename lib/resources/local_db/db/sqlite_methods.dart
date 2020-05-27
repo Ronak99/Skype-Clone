@@ -54,7 +54,7 @@ class SqliteMethods implements LogInterface {
         "CREATE TABLE $tableName ($id INTEGER PRIMARY KEY, $callerName TEXT, $callerPic TEXT, $receiverName TEXT, $receiverPic TEXT, $callStatus TEXT, $timestamp TEXT)";
 
     await db.execute(createTableQuery);
-    print("creating table");
+    print("table created");
   }
 
   @override
@@ -67,21 +67,11 @@ class SqliteMethods implements LogInterface {
   Future<List<Log>> getLogs() async {
     try {
       var dbClient = await db;
-      List<Map> maps = await dbClient.query(tableName, columns: [
-        id,
-        callerName,
-        callerPic,
-        receiverName,
-        receiverPic,
-        callStatus,
-        timestamp,
-      ]);
-      //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
+      List<Map> mapList = await dbClient.rawQuery("SELECT * FROM $tableName");
       List<Log> logList = [];
-      if (maps.length > 0) {
-        for (int i = 0; i < maps.length; i++) {
-          var logMap = maps[i];
-          logList.insert(0, Log.fromMap(logMap));
+      if (mapList.isNotEmpty) {
+        for (Map map in mapList) {
+          logList.add(Log.fromMap(map));
         }
       }
       return logList;
@@ -93,9 +83,9 @@ class SqliteMethods implements LogInterface {
 
   @override
   deleteLogs(int logId) async {
-    var client = await db;
+    var dbClient = await db;
 
-    return await client.delete(tableName, where: '$id = ?', whereArgs: [logId]);
+    return await dbClient.delete(tableName, where: '$id = ?', whereArgs: [logId]);
   }
 
   @override

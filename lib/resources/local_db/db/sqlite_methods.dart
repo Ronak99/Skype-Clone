@@ -63,6 +63,13 @@ class SqliteMethods implements LogInterface {
     await dbClient.insert(tableName, log.toMap(log));
   }
 
+  updateLogs(Log log) async {
+    var dbClient = await db;
+
+    await dbClient.update(tableName, log.toMap(log),
+        where: '$id = ?', whereArgs: [log.logId]);
+  }
+
   @override
   Future<List<Log>> getLogs() async {
     try {

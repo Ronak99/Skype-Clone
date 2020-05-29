@@ -2,20 +2,18 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:skype_clone/models/log.dart';
+import 'package:skype_clone/resources/local_db/interface/log_interface.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:skype_clone/resources/local_db/interface/log_interface.dart';
 
 class SqliteMethods implements LogInterface {
   Database _db;
 
-  //database name
-  String dbName;
+  String databaseName = "LogDB";
 
-  // table name
-  String tableName = 'CallLogs';
+  String tableName = "Call_Logs";
 
-  //columns
+  // columns
   String id = 'log_id';
   String callerName = 'caller_name';
   String callerPic = 'caller_pic';
@@ -24,28 +22,11 @@ class SqliteMethods implements LogInterface {
   String callStatus = 'call_status';
   String timestamp = 'timestamp';
 
-  Future<Database> get db async {
-    if (_db != null) {
-      // print("db is not null");
-      return _db;
-    }
-    print("db was null, now awaiting it");
-    _db = await init();
-    return _db;
-  }
-
-  @override
-  openDb(_dbName) => dbName = _dbName;
-
   @override
   init() async {
-    final Directory dir = await getApplicationDocumentsDirectory();
-    String path = join(dir.path, dbName);
-    var db = await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    Directory dir = await getApplicationDocumentsDirectory();
+    String path = join(dir.path, databaseName);
+    var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
 
@@ -58,39 +39,26 @@ class SqliteMethods implements LogInterface {
   }
 
   @override
-  addLogs(Log log) async {
-    var dbClient = await db;
-    await dbClient.insert(tableName, log.toMap(log));
+  addLogs(Log log) {
+    print("Adding values to Sqlite Db");
+    return null;
   }
 
   @override
-  Future<List<Log>> getLogs() async {
-    try {
-      var dbClient = await db;
-      List<Map> mapList = await dbClient.rawQuery("SELECT * FROM $tableName");
-      List<Log> logList = [];
-      if (mapList.isNotEmpty) {
-        for (Map map in mapList) {
-          logList.add(Log.fromMap(map));
-        }
-      }
-      return logList;
-    } catch (e) {
-      print(e);
-      return null;
-    }
+  close() {
+    // TODO: implement close
+    return null;
   }
 
   @override
-  deleteLogs(int logId) async {
-    var dbClient = await db;
-
-    return await dbClient.delete(tableName, where: '$id = ?', whereArgs: [logId]);
+  deleteLogs(int logId) {
+    // TODO: implement deleteLogs
+    return null;
   }
 
   @override
-  close() async {
-    var dbClient = await db;
-    dbClient.close();
+  Future<List<Log>> getLogs() {
+    // TODO: implement getLogs
+    return null;
   }
 }

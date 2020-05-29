@@ -1,8 +1,6 @@
 import 'package:skype_clone/models/log.dart';
 
 abstract class LogInterface {
-  openDb(String dbName);
-
   init();
 
   addLogs(Log log);

@@ -10,7 +10,7 @@ class SqliteMethods implements LogInterface {
   Database _db;
 
   //database name
-  String dbName;
+  String dbName = 'somename';
 
   // table name
   String tableName = 'CallLogs';

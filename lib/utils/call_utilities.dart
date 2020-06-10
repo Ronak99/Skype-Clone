@@ -41,10 +41,11 @@ class CallUtils {
       LogRepository.addLogs(log);
 
       Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CallScreen(call: call),
-          ));
+        context,
+        MaterialPageRoute(
+          builder: (context) => CallScreen(call: call),
+        ),
+      );
     }
   }
 }

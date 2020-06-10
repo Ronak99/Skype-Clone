@@ -1,54 +1,35 @@
-import 'dart:io';
 
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:skype_clone/models/log.dart';
 import 'package:skype_clone/resources/local_db/interface/log_interface.dart';
 
 class HiveMethods implements LogInterface {
-  String _hiveBox;
-
   @override
-  openDb(String dbName) => _hiveBox = dbName;
-
-  @override
-  init() async {
-    final Directory d = await getApplicationDocumentsDirectory();
-    Hive.init(d.path);
+  addLogs(Log log) {
+    print("Adding values to hive db");
+    return null;
   }
 
   @override
-  addLogs(Log log) async {
-    final Box box = await Hive.openBox(_hiveBox);
-    var logMap = log.toMap(log);
-    int idOfInput = await box.add(logMap);
-    Hive.close();
-    return idOfInput;
+  close() {
+    // TODO: implement close
+    return null;
   }
 
   @override
-  Future<List<Log>> getLogs() async {
-    final Box box = await Hive.openBox(_hiveBox);
-    List<Log> list = [];
-
-    for (int i = 0; i < box.length; i++) {
-      var logMap = box.getAt(i);
-      list.add(
-        Log.fromMap(
-          logMap,
-        ),
-      );
-    }
-
-    return list;
+  deleteLogs(int logId) {
+    // TODO: implement deleteLogs
+    return null;
   }
 
   @override
-  deleteLogs(int logId) async {
-    final Box box = await Hive.openBox(_hiveBox);
-    await box.deleteAt(logId);
+  Future<List<Log>> getLogs() {
+    // TODO: implement getLogs
+    return null;
   }
 
   @override
-  close() => Hive.close();
+  init() {
+    print("initialized hive db");
+    return null;
+  }
 }

@@ -43,3 +43,5 @@ This project is going to be divided in several different branches. As I release 
 15. Foundation for storing data locally - [Video](https://www.youtube.com/watch?v=YeYSyI1RXn8) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-15-Foundation_For_Storing_Data_Locally)
 
 16. CRUD Operations Sqlite - [Video](https://www.youtube.com/watch?v=2tv4iRrt80E) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-16-Using_SQLite_To_Store_Data_Locally)
+
+17. CRUD Operations Hive - [Video](https://youtu.be/IBKFGWb2vsk) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-17-Using_HIVE_To_Store_Data_Locally)

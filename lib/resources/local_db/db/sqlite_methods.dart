@@ -53,13 +53,6 @@ class SqliteMethods implements LogInterface {
     await dbClient.insert(tableName, log.toMap(log));
   }
 
-  @override
-  deleteLogs(int logId) async {
-    var dbClient = await db;
-    return await dbClient
-        .delete(tableName, where: '$id = ?', whereArgs: [logId]);
-  }
-
   updateLogs(Log log) async {
     var dbClient = await db;
 
@@ -103,6 +96,12 @@ class SqliteMethods implements LogInterface {
       print(e);
       return null;
     }
+  }
+
+  @override
+  deleteLogs(int logId) async {
+    var client = await db;
+    return await client.delete(tableName, where: '$id = ?', whereArgs: [logId]);
   }
 
   @override

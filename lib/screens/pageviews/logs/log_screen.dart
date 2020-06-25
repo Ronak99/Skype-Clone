@@ -12,7 +12,18 @@ class LogScreen extends StatelessWidget {
     return PickupLayout(
       scaffold: Scaffold(
         backgroundColor: UniversalVariables.blackColor,
-        appBar: SkypeAppBar(),
+        appBar: SkypeAppBar(
+          title: "Calls",
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: () => Navigator.pushNamed(context, "/search_screen"),
+            ),
+          ],
+        ),
         floatingActionButton: FloatingColumn(),
         body: Padding(
           padding: EdgeInsets.only(left: 15),

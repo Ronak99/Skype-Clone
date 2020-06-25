@@ -11,7 +11,7 @@ import 'package:skype_clone/screens/pageviews/chats/chat_list_screen.dart';
 import 'package:skype_clone/screens/pageviews/logs/log_screen.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 
-class HomeScreen extends StatefulWidget {
+class  HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

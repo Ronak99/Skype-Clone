@@ -23,6 +23,8 @@ class HiveMethods implements LogInterface {
     // box.put("custom_key", logMap);
     int idOfInput = await box.add(logMap);
 
+    print("Log added with id ${idOfInput.toString()} in Hive db");
+
     close();
 
     return idOfInput;

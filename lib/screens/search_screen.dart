@@ -5,6 +5,7 @@ import 'package:skype_clone/models/user.dart';
 import 'package:skype_clone/resources/auth_methods.dart';
 import 'package:skype_clone/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:skype_clone/screens/chatscreens/chat_screen.dart';
+import 'package:skype_clone/screens/chatscreens/widgets/cached_image.dart';
 import 'package:skype_clone/utils/universal_variables.dart';
 import 'package:skype_clone/widgets/custom_tile.dart';
 
@@ -123,10 +124,15 @@ class _SearchScreenState extends State<SearchScreen> {
                           receiver: searchedUser,
                         )));
           },
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(searchedUser.profilePhoto),
-            backgroundColor: Colors.grey,
+          leading: CachedImage(
+            searchedUser.profilePhoto,
+            radius: 25,
+            isRound: true,
           ),
+          // leading: CircleAvatar(
+          //   backgroundImage: NetworkImage(searchedUser.profilePhoto),
+          //   backgroundColor: Colors.grey,
+          // ),
           title: Text(
             searchedUser.username,
             style: TextStyle(

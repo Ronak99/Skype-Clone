@@ -9,7 +9,7 @@ class FloatingColumn extends StatelessWidget {
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
+            shape: BoxShape.circle,
             gradient: UniversalVariables.fabGradient,
           ),
           child: Icon(
@@ -22,10 +22,12 @@ class FloatingColumn extends StatelessWidget {
         SizedBox(height: 15),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
+              shape: BoxShape.circle,
               color: UniversalVariables.blackColor,
               border: Border.all(
-                  width: 2, color: UniversalVariables.gradientColorEnd)),
+                width: 2,
+                color: UniversalVariables.gradientColorEnd,
+              )),
           child: Icon(
             Icons.add_call,
             color: UniversalVariables.gradientColorEnd,

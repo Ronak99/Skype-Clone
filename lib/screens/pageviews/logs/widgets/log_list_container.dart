@@ -58,7 +58,6 @@ class _LogListContainerState extends State<LogListContainer> {
           return Center(child: CircularProgressIndicator());
         }
 
-        
         if (snapshot.hasData) {
           List<dynamic> logList = snapshot.data;
 
@@ -124,7 +123,10 @@ class _LogListContainerState extends State<LogListContainer> {
           );
         }
 
-        return Text("No Call Logs");
+        return QuietBox(
+          heading: "This is where all your call logs are listed",
+          subtitle: "Calling people all over the world with just one click",
+        );
       },
     );
   }

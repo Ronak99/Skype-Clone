@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       );
 
       LogRepository.init(
-        isHive: false,
+        isHive: true,
         dbName: userProvider.getUser.uid,
       );
     });

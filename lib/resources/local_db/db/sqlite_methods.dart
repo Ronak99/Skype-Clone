@@ -9,7 +9,7 @@ import 'package:path/path.dart';
 class SqliteMethods implements LogInterface {
   Database _db;
 
-  String databaseName = "LogDB2";
+  String databaseName = "";
 
   String tableName = "Call_Logs";
 
@@ -30,6 +30,9 @@ class SqliteMethods implements LogInterface {
     _db = await init();
     return _db;
   }
+
+  @override
+  openDb(dbName) => (databaseName = dbName);
 
   @override
   init() async {
@@ -102,7 +105,8 @@ class SqliteMethods implements LogInterface {
   @override
   deleteLogs(int logId) async {
     var client = await db;
-    return await client.delete(tableName, where: '$id = ?', whereArgs: [logId+1]);
+    return await client
+        .delete(tableName, where: '$id = ?', whereArgs: [logId + 1]);
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as Im;
+// import 'package:image/image.dart' as Im;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
@@ -32,11 +32,11 @@ class Utils {
     final path = tempDir.path;
     int rand = Random().nextInt(10000);
 
-    Im.Image image = Im.decodeImage(imageToCompress.readAsBytesSync());
-    Im.copyResize(image, width: 500, height: 500);
+    // Im.Image image = Im.decodeImage(imageToCompress.readAsBytesSync());
+    // Im.copyResize(image, width: 500, height: 500);
 
-    return new File('$path/img_$rand.jpg')
-      ..writeAsBytesSync(Im.encodeJpg(image, quality: 85));
+    // return new File('$path/img_$rand.jpg')
+    //   ..writeAsBytesSync(Im.encodeJpg(image, quality: 85));
   }
 
   static int stateToNum(UserState userState) {

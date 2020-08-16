@@ -148,7 +148,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
         return ListView.builder(
           padding: EdgeInsets.all(10),
-          controller: _listScrollController,
           reverse: true,
           itemCount: snapshot.data.documents.length,
           itemBuilder: (context, index) {

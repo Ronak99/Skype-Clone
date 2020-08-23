@@ -1,24 +1,12 @@
 # Skype Clone in <img src='http://sovitpoudel.com.np/wp-content/uploads/2019/01/flutter.png' height='30' width='30' align='top'>
 
-Making a Skype Clone in Flutter - **In Progress**
+Making a Skype Clone in Flutter 
+
 Checkout the course here : [THE CS GUY](https://youtu.be/01PUYvVoLa8)
 
-## Screenshots
+## Branch 14 - Making User Profile
 
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_01.png' align='left' width='30%'>
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_02.png' align='left' width='30%'>
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_03.png' width='30%'>
-
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_04.png' align='left' width='30%'>
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_05.png' align='left' width='30%'>
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_06.png' width='30%'>
-
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_07.png' align='left' width='30%'>
-<img src='https://raw.githubusercontent.com/Ronak99/Skype-Clone/screenshots/flutter_08.png' width='30%'>
-
-
-
-## Project Structure
+### Project Structure
 
 This project is going to be divided in several different branches. As I release a new video, the content related to that video will be committed to the branch with the same name as that of the video.
 
@@ -49,3 +37,11 @@ This project is going to be divided in several different branches. As I release 
 12.5. [BREAKING - CHANGES] - [Video](https://youtu.be/_r5bV5tr5_E) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-12-Video_Calling_Over_Network)
 
 13. Populating Chat List Screen - [Video](https://youtu.be/Yjtax0D2MTg) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-13-Populate_Chat_List_Screen)
+
+14. Making User Profile - [Video](https://youtu.be/1SDZ_CAykgY) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-14-Making_User_Profile)
+
+15. Foundation for storing data locally - [Video](https://www.youtube.com/watch?v=YeYSyI1RXn8) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-15-Foundation_For_Storing_Data_Locally)
+
+16. CRUD Operations Sqlite - [Video](https://www.youtube.com/watch?v=2tv4iRrt80E) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-16-Using_SQLite_To_Store_Data_Locally)
+
+17. CRUD Operations Hive - [Video](https://youtu.be/IBKFGWb2vsk) - [Code](https://github.com/Ronak99/Skype-Clone/tree/Part-17-Using_HIVE_To_Store_Data_Locally)

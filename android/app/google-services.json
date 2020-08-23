@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:290635373448:android:36e677b1fff649a7",
+        "mobilesdk_app_id": "1:290635373448:android:54b5e4a998d881f79d383d",
         "android_client_info": {
           "package_name": "com.example.skype_clone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "290635373448-3khqfuciq9h17e6lu821tfl2ksc0ms7u.apps.googleusercontent.com",
+          "client_id": "290635373448-3r1sscjfbn8beccc5dc87fpseue9db4s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.skype_clone",
-            "certificate_hash": "9716fdb6245450411a433c67cbd28f0a6a84e1b2"
+            "certificate_hash": "d5939fbca36cbe9dc8dd3c34d58dab8b241f9e86"
           }
         },
         {

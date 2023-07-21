@@ -1,4 +1,4 @@
-# Skype Clone in <img src='https://cdn-images-1.medium.com/v2/resize:fit:1200/1*5-aoK8IBmXve5whBQM90GA.png' height='30' width='30' align='top'>
+# Skype Clone in Flutter
 
 <p align="center">
 <a href="https://github.com/Ronak99/Skype-Clone/blob/master/LICENSE" title="License">
